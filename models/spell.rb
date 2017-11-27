@@ -1,5 +1,31 @@
 require 'json'
+load 'models/mention.rb'
 
+=begin
+class Mention
+
+  def initialize(params)
+    puts "GON INSILTIAZE A MENTION"
+    @book = params["Book"]
+    @quote = params["Concordance"]
+    @position = params["Position"]
+    @name = params["Spell"]
+  end
+
+  attr_reader :book, :quote, :position, :name
+
+  def self.data
+    path = 'data/mentions.json'
+    file = File.read(path)
+    JSON.parse(file)
+  end
+
+  def self.random
+    new(data.sample)
+  end
+
+end
+=end
 class Spell
 
   def initialize(params)
@@ -7,6 +33,9 @@ class Spell
     @effect = params["Effect"]
     @name = params["Spell(Lower)"]
     @formatted_name = params["Spell"]
+    @book = params["Book"]
+    @quote = params["Concordance"]
+    @position = params["Position"]
   end
 
   attr_reader :classification, :effect, :name, :formatted_name
@@ -40,7 +69,8 @@ class Spell
   # This instance method should return the reversed name of a spell
   # Tests: `bundle exec rspec -t reverse .`
   def reverse_name
-    puts data.index{ |el| el["Spell(Lower)"] }
+    spell_name = @name
+    return spell_name.reverse	
   end
 
   # Spell 2: Counter
@@ -48,7 +78,29 @@ class Spell
   # (integer) of mentions of the spell.
   # Tests: `bundle exec rspec -t counter .`
   def mention_count
-    'write this method'
+    puts "a mention"
+    p "b4"
+    m = Mentions.new({"Book": @book, "Concordance": @quote, "Position": @position, "Spell(Lower)": @name})
+    puts m    #puts m.instance_variable_get(:@position)
+
+    p "b5"
+#    puts @book
+#
+#    spell_name = @name
+#    count = 0
+#    @mention_data = JSON.parse(File.read('data/mentions.json'))
+
+#    @mention_data.each do |spell_instance|
+        #count = 0
+#        if (spell_name.eql? spell_instance["Spell"])
+#	    count += 1
+#            puts spell_name + " has appeared in Book" + spell_instance["Book"] + " for the " + count.to_s + " time!"
+    
+#	end
+#    end
+#    puts "we found " + spell_name + " " + count.to_s + " times! "
+#    return count
+  p "dunnit"
   end
 
   # Spell 3: Letter
